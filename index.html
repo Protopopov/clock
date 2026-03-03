@@ -1,20 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      margin: 0;
       background: #4591F7;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      gap: 32px;
     }
     canvas { border-radius: 50%; }
+    .lunch {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 55px;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
   </style>
 </head>
 <body>
   <canvas id="clock" width="400" height="400"></canvas>
+  <div class="lunch">Lunch bis 13.30 Uhr</div>
   <script>
     const canvas = document.getElementById('clock');
     const ctx = canvas.getContext('2d');
@@ -54,9 +66,9 @@
 
       // Logo — centered in upper half of clock face
       if (logo.complete && logo.naturalWidth > 0) {
-        const logoSize = 86;  // SVG is square-ish, display as icon
+        const logoSize = 72;
         const logoX = cx - logoSize / 2;
-        const logoY = cy + r * 0.52 - logoSize / 2;
+        const logoY = cy - r * 0.52 - logoSize / 2;
         ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
       }
 
