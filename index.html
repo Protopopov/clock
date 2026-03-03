@@ -21,6 +21,7 @@
       color: #ffffff;
       letter-spacing: 0.5px;
       white-space: nowrap;
+      text-transform: uppercase;
     }
   </style>
 </head>
@@ -68,7 +69,7 @@
       if (logo.complete && logo.naturalWidth > 0) {
         const logoSize = 72;
         const logoX = cx - logoSize / 2;
-        const logoY = cy - r * 0.52 - logoSize / 2;
+        const logoY = cy + r * 0.52 - logoSize / 2;
         ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
       }
 
