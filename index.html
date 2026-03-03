@@ -67,12 +67,12 @@
 
       // Logo — centered in upper half of clock face
       if (logo.complete && logo.naturalWidth > 0) {
-        const logoSize = 72;
-        const logoX = cx - logoSize / 2;
-        const logoY = cy + r * 0.52 - logoSize / 2;
-        ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
+        const logoW = 60;
+        const logoH = 44;
+        const logoX = cx - logoW / 2;
+        const logoY = cy + r * 0.48 - logoH / 2 + 12;
+        ctx.drawImage(logo, logoX, logoY, logoW, logoH);
       }
-
       // Hour hand
       const hAngle = ((h + m / 60) * Math.PI) / 6;
       drawHand(hAngle, r * 0.5, 8, '#000000');
