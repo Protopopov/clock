@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      background: #4591F7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    canvas { border-radius: 50%; }
+  </style>
+</head>
+<body>
+  <canvas id="clock" width="400" height="400"></canvas>
+  <script>
+    const canvas = document.getElementById('clock');
+    const ctx = canvas.getContext('2d');
+    const cx = 200, cy = 200, r = 190;
+
+    const logo = new Image();
+    logo.src = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI3LjguMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkZhcmJpZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiCgkgdmlld0JveD0iMCAwIDE3OSAxNTYiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDE3OSAxNTY7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojMDI2RUZGO30KCS5zdDF7ZmlsbDojQjkxNEZGO30KPC9zdHlsZT4KPGc+Cgk8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNTIuMSwxMTEuNGMtMS45LDAtMy40LTAuNS00LjYtMS42Yy0xLjEtMS0yLjQtMi44LTIuNC02LjJWNTIuNWMwLTMuNCwxLjMtNS4zLDIuNC02LjIKCQljMS42LTEuNCwzLjctMS44LDYuMy0xLjVINTRjMC41LDAuMSw1NC41LDEyLDU1LjIsMTIuMmMxLjcsMC40LDMuNCwxLjksMy40LDQuOXYzMi4yYzAsMy4xLTEuOCw0LjUtMy40LDQuOQoJCWMtMC43LDAuMi01NC43LDEyLTU1LjMsMTIuMmgtMC4yQzUzLjIsMTExLjMsNTIuNiwxMTEuNCw1Mi4xLDExMS40eiBNNTIuMSw0OS4zYy0wLjYsMC0xLjIsMC4xLTEuNiwwLjVjLTAuMywwLjMtMC44LDEtMC44LDIuNwoJCXY1MS4xYzAsMS43LDAuNSwyLjQsMC44LDIuN2MwLjYsMC41LDEuNywwLjUsMi41LDAuNGMzLjEtMC43LDUwLjctMTEuMiw1NC45LTEyLjFjMC0wLjEsMC0wLjIsMC0wLjRWNjEuOWMwLTAuMiwwLTAuMywwLTAuNAoJCWMtNC0wLjktNTEuOC0xMS40LTU0LjktMTIuMUM1Mi43LDQ5LjMsNTIuNCw0OS4zLDUyLjEsNDkuM3oiLz4KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xMjYuOSwxMTEuNGMtMC41LDAtMS4xLDAtMS43LTAuMUgxMjVjLTAuNS0wLjEtNTQuNi0xMi01NS4yLTEyLjJjLTEuNy0wLjQtMy40LTEuOS0zLjQtNC45VjYxLjkKCQljMC0zLjEsMS44LTQuNSwzLjQtNC45YzAuNy0wLjIsNTQuNy0xMiw1NS4zLTEyLjJoMC4yYzIuNi0wLjQsNC44LDAuMSw2LjMsMS41YzEuMSwxLDIuNCwyLjgsMi40LDYuMnY1MS4xYzAsMy40LTEuMyw1LjMtMi40LDYuMgoJCUMxMzAuNCwxMTAuOCwxMjguOCwxMTEuNCwxMjYuOSwxMTEuNHogTTEyNiwxMDYuNmMwLjgsMC4xLDEuOSwwLjEsMi41LTAuNGMwLjMtMC4zLDAuOC0xLDAuOC0yLjd2LTUxYzAtMS43LTAuNS0yLjQtMC44LTIuNwoJCWMtMC42LTAuNS0xLjctMC41LTIuNS0wLjRjLTMuMSwwLjctNTAuNywxMS4yLTU0LjksMTIuMWMwLDAuMSwwLDAuMiwwLDAuNHYzMi4yYzAsMC4yLDAsMC4zLDAsMC40Qzc1LjEsOTUuNCwxMjIuOSwxMDYsMTI2LDEwNi42egoJCSIvPgo8L2c+Cjwvc3ZnPgo=';
+
+    function draw() {
+      const now = new Date();
+      const h = now.getHours() % 12, m = now.getMinutes(), s = now.getSeconds();
+      ctx.clearRect(0, 0, 400, 400);
+
+      // Face
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+      ctx.fillStyle = '#f5f0e8';
+      ctx.fill();
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 8;
+      ctx.stroke();
+
+      // Hour markers
+      for (let i = 0; i < 12; i++) {
+        const angle = (i * Math.PI) / 6;
+        const x1 = cx + (r - 20) * Math.sin(angle);
+        const y1 = cy - (r - 20) * Math.cos(angle);
+        const x2 = cx + (r - 35) * Math.sin(angle);
+        const y2 = cy - (r - 35) * Math.cos(angle);
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+      }
+
+      // Logo — centered in upper half of clock face
+      if (logo.complete && logo.naturalWidth > 0) {
+        const logoSize = 86;  // SVG is square-ish, display as icon
+        const logoX = cx - logoSize / 2;
+        const logoY = cy + r * 0.52 - logoSize / 2;
+        ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
+      }
+
+      // Hour hand
+      const hAngle = ((h + m / 60) * Math.PI) / 6;
+      drawHand(hAngle, r * 0.5, 8, '#000000');
+
+      // Minute hand
+      const mAngle = ((m + s / 60) * Math.PI) / 30;
+      drawHand(mAngle, r * 0.75, 5, '#000000');
+
+      // Second hand
+      const sAngle = (s * Math.PI) / 30;
+      drawHand(sAngle, r * 0.85, 2, '#C460F7');
+
+      // Center dot
+      ctx.beginPath();
+      ctx.arc(cx, cy, 8, 0, 2 * Math.PI);
+      ctx.fillStyle = '#000000';
+      ctx.fill();
+
+      requestAnimationFrame(draw);
+    }
+
+    function drawHand(angle, length, width, color) {
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + length * Math.sin(angle), cy - length * Math.cos(angle));
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+    }
+
+    logo.onload = draw;
+    draw();
+  </script>
+</body>
+</html>
